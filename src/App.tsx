@@ -11,7 +11,7 @@ function App() {
 				<div>{player1Counter}</div>
 				<button
 					onClick={() => {
-						setPlayer1Counter(player1Counter + 1);
+						setPlayer1Counter((actual) => actual + 1); //зависимость от предыдущего значения, чтобы избежать ошибок в более сложных конструкциях
 					}}>
 					+
 				</button>
@@ -22,7 +22,7 @@ function App() {
 				<div>{player2Counter}</div>
 				<button
 					onClick={() => {
-						setPlayer2Counter(player2Counter + 1);
+						setPlayer2Counter((actual) => actual + 1);
 					}}>
 					+
 				</button>
@@ -30,13 +30,21 @@ function App() {
 			<hr />
 			<button
 				onClick={() => {
-					setPlayer1Counter(player1Counter - 1);
-					setPlayer2Counter(player2Counter - 1);
+					setPlayer1Counter((actual) => actual - 1);
+					setPlayer2Counter((actual) => actual - 1);
 				}}>
 				-
+			</button>
+			<button
+				onClick={() => {
+					setPlayer1Counter(10);
+					setPlayer2Counter(10);
+				}}>
+				reset
 			</button>
 		</div>
 	);
 }
 
 export default App;
+//Хуки вызываются только в компоненте. Их нельзя вызывать в циклах, услових, функциях
