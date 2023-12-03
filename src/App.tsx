@@ -2,16 +2,20 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-	let [player1Counter, setPlayer1Counter] = useState(0);
-	let [player2Counter, setPlayer2Counter] = useState(0);
+	let [counters, setCounters] = useState({
+		c1: 10,
+		c2: 20,
+	});
 	return (
 		<div>
 			<div>
 				<div>Иван Иванович</div>
-				<div>{player1Counter}</div>
+				<div>{counters.c1}</div>
 				<button
 					onClick={() => {
-						setPlayer1Counter((actual) => actual + 1); //зависимость от предыдущего значения, чтобы избежать ошибок в более сложных конструкциях
+						setCounters((actual) => {
+							return { ...actual, c1: actual.c1 + 1 };
+						}); //избегать мутабельности, 1. распаковать, 2. взять значение:  задать ему новое
 					}}>
 					+
 				</button>
@@ -19,10 +23,12 @@ function App() {
 			<hr />
 			<div>
 				<div>Пётр Петрович</div>
-				<div>{player2Counter}</div>
+				<div>{counters.c2}</div>
 				<button
 					onClick={() => {
-						setPlayer2Counter((actual) => actual + 1);
+						setCounters((actual) => {
+							return { ...actual, c2: actual.c2 + 1 };
+						}); //избегать мутабельности, 1. распаковать, 2. взять значение:  задать ему новое
 					}}>
 					+
 				</button>
@@ -30,15 +36,25 @@ function App() {
 			<hr />
 			<button
 				onClick={() => {
-					setPlayer1Counter((actual) => actual - 1);
-					setPlayer2Counter((actual) => actual - 1);
+					setCounters((actual) => {
+						return {
+							...actual,
+							c1: actual.c1 - 1,
+							c2: actual.c2 - 1,
+						};
+					});
 				}}>
 				-
 			</button>
 			<button
 				onClick={() => {
-					setPlayer1Counter(10);
-					setPlayer2Counter(10);
+					setCounters((actual) => {
+						return {
+							...actual,
+							c1: 0,
+							c2: 0,
+						};
+					});
 				}}>
 				reset
 			</button>
